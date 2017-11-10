@@ -1,68 +1,87 @@
 import React, {Component} from "react";
+import { Link, Prompt } from "react-router-dom";
+import { saveUser } from "../service/getUser";
+import PropTypes from "prop-types";
 
-import { Form, Icon, Input, Button, message, Checkbox } from 'antd';
+
+import { Form, Icon, Input, Button, Spin, message, notification } from 'antd';
 import "../css/login.css";
 
 const FormItem = Form.Item;
 
-
 class NormalLoginForm extends Component {
+  static propTypes = {
+    isFetching: PropTypes.bool.isRequired,
+    actions: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    error: PropTypes.bool,
+    message: PropTypes.string,
+  }
+  state = {
+    captcha: "",
+    formHasChanged: false 
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.username) {
+      this.props.history.push("/");
+    } 
+    console.log(this.props);
+    console.log("will")
+    // if (nextProps.error) {
+    //   console.log("message:", this.props.message)
+    //   console.log("message", message);
+    //   message.info("错误")
+    // }
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        fetch("http://192.168.1.118:3000", {
-          credentials: "include",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(values) 
-        }).then((res) => {
-          return res.json()
-        }).then((login) => {
-          console.log("Login Return: ", login);
-          if (login.OK) {
-            localStorage.setItem("username", login.user.username);
-            //this.props.history.replace("/");
-            window.location.href="/";
-          } else {
-            message.error(login.message);
-          }
-        })
+        this.props.actions.loginChunk(values);
       }
     });
   }
-  // componentWillMount() {
-  //   this.getCap();
-  // }
-  // getCap() {
-  //   fetch("http://localhost:3000/captcha", {
-  //     credentials: "include",
-  //   }).then((res) => {
-  //     return res.json()
-  //   }).then((data) => {
-  //     //console.log("data: ", data); 
-  //     this.setState({
-  //       capBase64: data.captcha
-  //     })
-  //   }) 
-  // }
+  getCaptcha() {
+    fetch("http://localhost:3000/captcha", {
+      credentials: "include"
+    }).then((res) => {
+      return res.json() 
+    }).then((data) => {
+      console.log("cap", data);
+      this.setState({
+        captcha: data.captcha
+      })
+    })
+  }
+  componentDidMount() {
+    this.getCaptcha();
+  }
   render() {
-    console.log("Props", this.props);
-    //const capImg = (<img style={{height: 28, cursor: "pointer"}}
-      // onClick={() => this.getCap()}
-      // src={ "data: image/jpg; base64," + this.state.capBase64}
-      // alt="captcha"/>)
+    if (this.props.isFetching) {
+      return(
+        <div className="loading">
+          <Spin />
+        </div>
+      )
+    }
+
+    const {captcha, formHasChanged} = this.state;
     const { getFieldDecorator } = this.props.form;
+    const capImg = (<img style={{height: 28}}
+      src={"data: image/jpg; base64," + captcha} alt="验证码"/>)
     return (
     	<div className="login">
-      <Form onSubmit={this.handleSubmit} className="login-form">
-      	<h1>欢迎登录 <span>已有账号，<a>请注册</a></span>
+      <Prompt when={formHasChanged} message="Are you sure?"/>
+      <Form onChange={() => this.setState({formHasChanged: true})} 
+      onSubmit={this.handleSubmit} className="login-form">
+      	<h1>欢迎登录
+        <span>没有账号，<Link to="/signup">请注册 &nbsp;
+          <Icon type="right-circle" />
+        </Link></span>
       	</h1>
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
             <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
@@ -76,28 +95,22 @@ class NormalLoginForm extends Component {
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(
-            <Checkbox>Remember me</Checkbox>
-          )}
-          <p className="login-form-forgot"><a href="">Forgot password</a></p>
-        </FormItem>
-        <FormItem>
           {getFieldDecorator('captcha', {
             valuePropName: 'checked',
             initialValue: true,
           })(
-            <Input 
-            addonBefore={<lable>验证码</lable>}
-            // addonAfter={capImg}
-            placeholder="点击图片重新获取" />
+            <Input addonBefore={<label>验证码</label>} 
+            addonAfter={capImg}
+            placeholder="点击重新获取" />
           )}
         </FormItem>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button type="primary" htmlType="submit" className="login-form-button">
             登 录
-        </Button>
+          </Button>
+          <Link className="login-form-forgot" to="/forgot-password">
+            <Icon type="question-circle-o" /> &nbsp;
+            忘记密码
+          </Link>
       </Form>
       </div>
     );

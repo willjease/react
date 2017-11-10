@@ -1,32 +1,28 @@
 import React, { Component } from 'react';
-import AppNav from './components/AppNav';
-import Home from './pages/Home';
-import Login from "./pages/Login";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import ConNav from "./containers/ConNav";
+import ConLogin from "./containers/ConLogin";
 import Signup from "./pages/Signup";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import './css/App.css';
+import Home from "./pages/Home";
+import User from "./pages/User";
+import "whatwg-fetch";
 
-const currentUser = localStorage.getItem("username");
+import "./App.css";
+
 class App extends Component {
   render() {
-    const LoginRoute = ({component: Component, ...rest}) => {
-      if (currentUser) {
-        return <Redirect to="/"/>
-      } else {
-        return <Route {...rest} component={Component}/>
-      }
-    }
     return (
-      <BrowserRouter>
-        <div>
-          <AppNav/>
+      <Router>
+        <div className="body">
+          <ConNav />
           <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route path="/login" component={Login}/>
             <Route path="/signup" component={Signup}/>
+            <Route path="/login" component={ConLogin}/>
+            <Route path="/user" component={User}/>
+            <Route exact path="/" component={Home}/>
           </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

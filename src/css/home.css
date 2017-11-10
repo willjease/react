@@ -1,10 +1,33 @@
 
-.home .ant-carousel .slick-dots li button {
-	background: #aaa;
+.home .ant-carousel .slick-dots {
+	  content: "";
+		border: 1px solid #ddd;
+		border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    padding: 10px 0;
+    height: 28px;
+    width: 20%;
+    background: #bbb;
+    opacity: 0.6;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
+.home .ant-carousel .slick-dots li {
+	height: 8px;
+	background: #ddd;
+	border: 1px solid #fff;
+	opacity: 1;
 }
 
 .home .ant-carousel .slick-dots li.slick-active button {
-	background: red;
+	background: #000000;
+}
+
+.home .ant-carousel .slick-dots li button {
+	height: 6px;
 }
 
 .home .ant-carousel .slick-slide {
@@ -20,4 +43,6 @@
 	top: 50%;
 	left: 0;
 	right: 0;
+
 }
+

@@ -4,28 +4,20 @@ import "../css/home.css";
 
 const imgs = [
 	{
-		img: "/imgs/1.jpg",
-		content: "火影1"
+		img: "imgs/1.png",
+		content: "第一张图片"
 	},
 	{
-		img: "/imgs/2.jpg",
-		content: "火影2"
+		img: "imgs/2.png",
+		content: "年终大促销"
 	},
 	{
-		img: "/imgs/3.jpg",
-		content: "火影3"
+		img: "imgs/3.png",
+		content: "健康助手"
 	},
 	{
-		img: "/imgs/4.jpg",
-		content: "火影4"
-	},
-	{
-		img: "/imgs/5.jpg",
-		content: "火影5"
-	},
-	{
-		img: "/imgs/6.jpg",
-		content: "火影6"
+		img: "imgs/4.png",
+		content: "最新科技"
 	}
 ];
 
