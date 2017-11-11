@@ -43,7 +43,7 @@ class NormalLoginForm extends Component {
     });
   }
   getCaptcha() {
-    fetch("http://localhost:3000/captcha", {
+    fetch("http://192.168.1.210:3000/captcha", {
       credentials: "include"
     }).then((res) => {
       return res.json() 

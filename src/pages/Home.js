@@ -4,19 +4,19 @@ import "../css/home.css";
 
 const imgs = [
 	{
-		img: "imgs/1.png",
+		img: "imgs/1.jpg",
 		content: "第一张图片"
 	},
 	{
-		img: "imgs/2.png",
+		img: "imgs/2.jpg",
 		content: "年终大促销"
 	},
 	{
-		img: "imgs/3.png",
+		img: "imgs/3.jpg",
 		content: "健康助手"
 	},
 	{
-		img: "imgs/4.png",
+		img: "imgs/4.jpg",
 		content: "最新科技"
 	}
 ];
