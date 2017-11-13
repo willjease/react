@@ -69,7 +69,7 @@ class NormalLoginForm extends Component {
     const {captcha, formHasChanged} = this.state;
     const { getFieldDecorator } = this.props.form;
     const capImg = (<img style={{height: 28}}
-      src={"data: image/jpg; base64," + captcha} alt="验证码"/>)
+      src={"data: image/jpg; base64," + captcha} alt="验证码" onClick={this.getCaptcha.bind(this)}/>)
     return (
     	<div className="login">
       <Prompt when={formHasChanged} message="Are you sure?"/>

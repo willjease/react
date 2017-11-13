@@ -36,9 +36,9 @@ class NavHeader extends Component {
     const menu = (
     <Menu>
       <Menu.Item key="1">
-        <Link to="/user">
+        <Button><Link to="/user">
         用户中心
-        </Link>
+        </Link></Button>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="2">
@@ -101,7 +101,7 @@ class NavHeader extends Component {
             <Button className="login-btn">登录
             </Button></Link>
             <Link to="/signup">
-            <Button ghost className="signup-btn" type="primary">注册
+            <Button className="signup-btn" type="primary">注册
             </Button></Link>
           </div>
             }

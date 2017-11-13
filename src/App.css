@@ -3,6 +3,7 @@
   height: 63px;
   float: left;
   font-size: 25px;
+  margin-left: 20px;
 }
 
 .header {
@@ -13,13 +14,13 @@
 .header .ant-btn.login-btn {
   position: absolute;
   top: 15px;
-  right: 40px;
+  right: 50px;
 }
 
 .header .signup-btn {
   position: absolute;
   top: 15px;
-  right: 120px;
+  right: 130px;
   color: #aaa;
   border: 1px solid #aaa;
 }
@@ -37,8 +38,8 @@
 
 .header button.user-btn  {
   position: absolute;
-  top: 15px;
-  right: 40px;
+  top: 18px;
+  right: 50px;
   cursor: pointer;
 }
 

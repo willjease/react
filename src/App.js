@@ -5,6 +5,7 @@ import ConLogin from "./containers/ConLogin";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import User from "./pages/User";
+import Manage from "./pages/Manage";
 import "whatwg-fetch";
 
 import "./App.css";
@@ -17,6 +18,7 @@ class App extends Component {
           <ConNav />
           <Switch>
             <Route path="/signup" component={Signup}/>
+            <Route path="/Manage" component={Manage}/>
             <Route path="/login" component={ConLogin}/>
             <Route path="/user" component={User}/>
             <Route exact path="/" component={Home}/>
