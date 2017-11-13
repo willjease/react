@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import { getUser } from "../../service/getUser";
-import { Layout, Menu, Icon, Button, Dropdown, message } from "antd";
+import { Layout, Menu, Icon, Button, Dropdown } from "antd";
 import { Link } from "react-router-dom";
 
 const {Header} = Layout
@@ -34,14 +33,20 @@ class NavHeader extends Component {
   }
   render() {
     const menu = (
-    <Menu>
-      <Menu.Item key="1">
-        <Button><Link to="/user">
+    <Menu 
+    style={{textAlign: "center"}}>
+      <Menu.Item key="user">
+        <Link to="/user">
         用户中心
-        </Link></Button>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="manage">
+        <Link to="/manage">
+        管理中心
+        </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="2">
+      <Menu.Item key="logout">
         <Button onClick={this.handleLogout.bind(this)}>退出登录</Button>
       </Menu.Item>
     </Menu>
@@ -101,7 +106,7 @@ class NavHeader extends Component {
             <Button className="login-btn">登录
             </Button></Link>
             <Link to="/signup">
-            <Button className="signup-btn" type="primary">注册
+            <Button ghost className="signup-btn" type="primary">注册
             </Button></Link>
           </div>
             }

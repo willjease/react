@@ -1,10 +1,8 @@
 import React, {Component} from "react";
 import { Link, Prompt } from "react-router-dom";
-import { saveUser } from "../service/getUser";
 import PropTypes from "prop-types";
-
-
-import { Form, Icon, Input, Button, Spin, message, notification } from 'antd';
+import {captcha} from "../service/api";
+import { Form, Icon, Input, Button } from 'antd';
 import "../css/login.css";
 
 const FormItem = Form.Item;
@@ -21,18 +19,6 @@ class NormalLoginForm extends Component {
     captcha: "",
     formHasChanged: false 
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user.username) {
-      this.props.history.push("/");
-    } 
-    console.log(this.props);
-    console.log("will")
-    // if (nextProps.error) {
-    //   console.log("message:", this.props.message)
-    //   console.log("message", message);
-    //   message.info("错误")
-    // }
-  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -43,11 +29,7 @@ class NormalLoginForm extends Component {
     });
   }
   getCaptcha() {
-    fetch("http://192.168.1.210:3000/captcha", {
-      credentials: "include"
-    }).then((res) => {
-      return res.json() 
-    }).then((data) => {
+    captcha().then((data) => {
       console.log("cap", data);
       this.setState({
         captcha: data.captcha
@@ -58,28 +40,21 @@ class NormalLoginForm extends Component {
     this.getCaptcha();
   }
   render() {
-    if (this.props.isFetching) {
-      return(
-        <div className="loading">
-          <Spin />
-        </div>
-      )
-    }
 
     const {captcha, formHasChanged} = this.state;
     const { getFieldDecorator } = this.props.form;
     const capImg = (<img style={{height: 28}}
-      src={"data: image/jpg; base64," + captcha} alt="验证码" onClick={this.getCaptcha.bind(this)}/>)
+      src={"data: image/jpg; base64," + captcha} alt="验证码"/>)
     return (
-    	<div className="login">
+      <div className="login">
       <Prompt when={formHasChanged} message="Are you sure?"/>
       <Form onChange={() => this.setState({formHasChanged: true})} 
       onSubmit={this.handleSubmit} className="login-form">
-      	<h1>欢迎登录
+        <h1>欢迎登录
         <span>没有账号，<Link to="/signup">请注册 &nbsp;
           <Icon type="right-circle" />
         </Link></span>
-      	</h1>
+        </h1>
         <FormItem>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
@@ -104,7 +79,9 @@ class NormalLoginForm extends Component {
             placeholder="点击重新获取" />
           )}
         </FormItem>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button type="primary" htmlType="submit" 
+          loading={this.props.isFetching}
+          className="login-form-button">
             登 录
           </Button>
           <Link className="login-form-forgot" to="/forgot-password">
