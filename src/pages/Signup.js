@@ -65,6 +65,7 @@ class NormalSignupForm extends Component {
   }
 
   render() {
+    console.log("this.props", this.props);
     const { getFieldDecorator } = this.props.form;
     const prefixSelector = getFieldDecorator('prefix', {
       initialValue: '86',

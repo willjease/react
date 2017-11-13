@@ -31,4 +31,4 @@ export const signupSubmit = (form) => {
 			dispatch(signupError(err.toString()));
 		})
 	}
-} 
+}  
