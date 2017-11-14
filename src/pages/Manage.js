@@ -3,6 +3,7 @@ import {Switch, Route, Link} from "react-router-dom";
 import {Row, Col, Menu} from "antd";
 import UploadImg from "./components/UploadImg";
 import Product from "./Product";
+import AddCategory from "./AddCategory";
 
 const MenuItem = Menu.Item;
 
@@ -29,7 +30,7 @@ class Manage extends Component {
 							</MenuItem>
 							<MenuItem key="/manage/product">
 								<Link to="/manage/product">
-								    商品管理
+								商品管理
 								</Link>
 							</MenuItem>
 							<MenuItem key="/manage/uploadimg">
@@ -42,11 +43,14 @@ class Manage extends Component {
 							<Route path="/manage/uploadimg" render={(props) => (
 								<UploadImg max={3} 
 								getImgList={(list)=> console.log(list)}
-								action="http://localhost:3000/upload"
+								action="http://192.168.1.210:3000/upload"
 								/>
 								)
 								}/>
 							<Route path="/manage/product" component={Product}/>
+							<Route path="/manage/category" component={
+								AddCategory
+							}/>
 						</Switch>
 					</Col>
 				</Row>

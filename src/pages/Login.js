@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Link, Prompt } from "react-router-dom";
 import PropTypes from "prop-types";
-import {captcha} from "../service/api";
+import api from "../service/api";
 import { Form, Icon, Input, Button } from 'antd';
 import "../css/login.css";
 
@@ -29,7 +29,7 @@ class NormalLoginForm extends Component {
     });
   }
   getCaptcha() {
-    captcha().then((data) => {
+    api.captcha().then((data) => {
       console.log("cap", data);
       this.setState({
         captcha: data.captcha
@@ -44,13 +44,12 @@ class NormalLoginForm extends Component {
     const {captcha, formHasChanged} = this.state;
     const { getFieldDecorator } = this.props.form;
     const capImg = (<img style={{height: 28}}
-      onClick={() => this.getCaptcha()}
       src={"data: image/jpg; base64," + captcha} alt="验证码"/>)
     return (
       <div className="login">
       <Prompt when={formHasChanged} message="Are you sure?"/>
       <Form onChange={() => this.setState({formHasChanged: true})} 
-      onSubmit={this.handleSubmit.bind(this)} className="login-form">
+      onSubmit={this.handleSubmit} className="login-form">
         <h1>欢迎登录
         <span>没有账号，<Link to="/signup">请注册 &nbsp;
           <Icon type="right-circle" />

@@ -74,7 +74,7 @@ class NormalProduct extends Component {
           label="图片列表"
         >
         	<UploadImg max={8} 
-        		action="http://localhost:3000/upload"
+        		action="http://192.168.1.210:3000/upload"
         		getImgList={this.getImgList.bind(this)}
         	/>
         </FormItem>
