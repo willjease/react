@@ -1,88 +1,70 @@
 import React, {Component} from "react";
-import {Form, Button, Input} from "antd";
-import UploadImg from "./components/UploadImg";
-const FormItem = Form.Item;
+import api from "../service/api";
+import ProductCard from "./components/ProductCard";
+import AddButton from "./components/AddButton";
+import ShoppingCart from "./components/ShoppingCart";
+import {Row, Col, Spin, message, Button} from "antd";
 
-class NormalProduct extends Component {
-	state = {
-		imgList: [],
-	}
-	getImgList(imgList) {
-		this.setState({
-			imgList:imgList 
-		})	
-	}
-	handleSubmit(e) {
-		e.preventDefault(e);
-		this.props.form.validateFields((err, values) => {
-			if (!err) {
-				console.log("values", values);
-				values.imgs = this.state.imgList;
-				console.log("values", values);
-			}
-		})
+class Product extends Component {
+  state= {
+    product: {},
+    count: 1,
+  }
+  componentWillMount() {
+    console.log(this.props);
+    const id = this.props.match.params.id;
+    console.log("ID", id);
+    api.getProduct(id).then((res) => {
+      if (res.OK) {
+        this.setState({product: res.doc})
+      } else {
+        message.error(res.message)
+      }
+    })
+  }
+  handleCount(value) {
+    console.log("count", value);
+    this.setState({
+      count: value
+    });
+  }
+  handleAddCart() {
+    const postData = [{
+      pid: this.state.product._id,
+      num: this.state.count
+    }];
+    console.log("addCart", postData);
+    api.addCart(postData).then((res) => {
+      console.log("res", res);
+    })
+  }
 
-	}
-	render() {
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-      },
-    };
-		const {getFieldDecorator} = this.props.form
-		return (
-			<div className="product">
-				<h1>新增商品</h1>
-				<Form onSubmit={this.handleSubmit.bind(this)}>
-				<FormItem
-          {...formItemLayout}
-          label={(
-            <span>
-              商品名称
-            </span>
-          )}
-          hasFeedback
-        >
-          {getFieldDecorator('name', {
-            rules: [{ required: true, message: '商品名称名不能为空', whitespace: true },
-            ],
-          })(
-            <Input />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="商品描述"
-          hasFeedback
-        >
-          {getFieldDecorator('description', {
-            rules: [{
-              required: true, message: '输入商品描述',
-            }],
-            validateTrigger: "onBlur"
-          })(
-            <Input />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="图片列表"
-        >
-        	<UploadImg max={8} 
-        		action="http://192.168.1.210:3000/upload"
-        		getImgList={this.getImgList.bind(this)}
-        	/>
-        </FormItem>
-        <Button htmlType="submit">提 交</Button>
-				</Form>
-			</div>
-		)
-	}
+  render() {
+    const {product} = this.state;
+    if (!product.images) {
+      return <Spin/>
+    }
+    return (
+      <div className="product">
+      <Row>
+      <Col span={8}>
+      <ProductCard product={product} />
+      </Col>
+      <Col span={16}>
+      <h1>商品详情</h1>
+      <AddButton onChange={this.handleCount.bind(this)}
+        defaultValue={this.state.count}
+      />
+
+      <Button onClick={this.handleAddCart.bind(this)}>加入购物车</Button>
+      <hr/>
+      <ShoppingCart />
+      </Col>
+      </Row>
+      </div>
+    )
+  }
 }
 
-export default Form.create()(NormalProduct);
+
+export default Product;
