@@ -7,19 +7,19 @@ import "../css/home.css";
 const imgs = [
 	{
 		img: "imgs/1.jpg",
-		content: "第一张图片"
+		content: "鞋子"
 	},
 	{
 		img: "imgs/2.jpg",
-		content: "年终大促销"
+		content: "帽子"
 	},
 	{
 		img: "imgs/3.jpg",
-		content: "健康助手"
+		content: "裤子"
 	},
 	{
 		img: "imgs/4.jpg",
-		content: "最新科技"
+		content: "上衣"
 	}
 ];
 

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Carousel, Row, Col} from "antd";
 import api from "../service/api";
 import ProductCard from "./components/ProductCard";
+import ConCart from "../containers/ConCart";
 import "../css/home.css";
 
 const imgs = [
@@ -39,20 +40,23 @@ class Home extends Component {
   }
   render() {
     console.log("Props", this.props);
-	return (
-	  <div className="home">
-	  <Carousel autoplay>
-	  {
-		imgs.map((img, i) => {
-		  return (
-			<div key={i}>
-			<img style={{margin: "auto"}} src={img.img} alt={img.img}/>
-			<h3>{img.content}</h3>
-			</div>
-		  )
-		})
-	  }
-	  </Carousel>
+  return (
+    <div className="home">
+    <div style={{position: "absolute", "right": 300, top: 100}}>
+    <ConCart />
+    </div>
+    <Carousel autoplay>
+    {
+    imgs.map((img, i) => {
+      return (
+      <div key={i}>
+      <img style={{margin: "auto"}} src={img.img} alt={img.img}/>
+      <h3>{img.content}</h3>
+      </div>
+      )
+    })
+    }
+    </Carousel>
       <div className="product">
       <Row gutter={10}>
       {
@@ -64,8 +68,8 @@ class Home extends Component {
       }
       </Row>
       </div>
-	  </div>
-	);
+    </div>
+  );
   }
 }
 
