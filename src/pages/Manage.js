@@ -58,4 +58,4 @@ class Manage extends Component {
   }
 }
 
-export default Manage;
+export default Manage

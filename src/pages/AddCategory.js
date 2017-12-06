@@ -13,7 +13,7 @@ class NormalCategory extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-	this.props.form.validateFields((err, values) => {
+  this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         api.addCat(values).then((res) => {
@@ -48,8 +48,8 @@ class NormalCategory extends Component {
   }
   render() {
     const {level, allCat2, targetKeys} = this.state;
-	const {getFieldDecorator} = this.props.form;
-	const formItemLayout = {
+  const {getFieldDecorator} = this.props.form;
+  const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
         sm: { span: 6 }
@@ -59,11 +59,11 @@ class NormalCategory extends Component {
         sm: { span: 12 }
       },
     };
-	return (
-	  <div className="category">
-	  <h2>新增产品分类</h2>
-	  <Form onSubmit={this.handleSubmit.bind(this)}>
-	  <FormItem
+  return (
+    <div className="category">
+    <h2>新增产品分类</h2>
+    <Form onSubmit={this.handleSubmit.bind(this)}>
+    <FormItem
       {...formItemLayout}
       label="分类名称"
       hasFeedback
@@ -81,15 +81,15 @@ class NormalCategory extends Component {
       {...formItemLayout}
       label={<span>分类等级<Tooltip title="两级分类，一表示大类，二表示小类"><Icon type="question-circle-o"/></Tooltip></span>}
       >
-	  {
+    {
         getFieldDecorator('level', {
-		  initialValue: level,
-	    })(
-		  <Select onChange={(level) => this.setState({level})}>
-		  <Option value="1">一级</Option>
-		  <Option value="2">二级</Option>
-		  </Select>
-	    )
+      initialValue: level,
+      })(
+      <Select onChange={(level) => this.setState({level})}>
+      <Option value="1">一级</Option>
+      <Option value="2">二级</Option>
+      </Select>
+      )
       }
       </FormItem>
       {
@@ -136,9 +136,9 @@ class NormalCategory extends Component {
       </Col>
       </Col>
       </Row>
-	  </Form>
-	  </div>
-	)
+    </Form>
+    </div>
+  )
   }
 }
 

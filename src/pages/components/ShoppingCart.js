@@ -39,19 +39,20 @@ class ShoppingCart extends Component {
 			>
 				<Button size="large"
 				onMouseOver={this.hanldeMouseOver.bind(this)}>
-				<Badge count={count} showZero>	
-				 购 物 车 &nbsp;
-				 <Icon type={"shopping-cart"}/>&nbsp;
-				 </Badge>
-				 </Button>
+				    <Badge count={count} showZero>	
+				    购 物 车 &nbsp;
+				        <Icon type={"shopping-cart"}/>&nbsp;
+				    </Badge>
+				</Button>
 				{
 					showList ?
 					<div className="cart">
-					  <h3>最近添加的商品</h3>
-						{
-							isFetching ? 
-							<Spin className="spin"/>	
-							:
+					<h3>最近添加的商品</h3>
+					{
+						isFetching ? 
+						<Spin className="spin"/>	
+						:
+						<div>
 							<div className="cartList">
 							{
 								cartList.length > 0 ?
@@ -62,17 +63,18 @@ class ShoppingCart extends Component {
 										<CartItem product={cart.product}
 										num={cart.num} key={i}
 										delCart={() => delCart(cart._id)}
-										/>
-									)
-								})
+											/>
+										)
+									})
 								: <p className="emputy">购物车空空如也</p>
 							}
 							</div>
 							<div className="cartFooter">
-							    <p>共{countn}件商品，共计￥{sum.toFixed(2)}</p>
-							    <Button type="primary">去购物车</Button>
-						    </div>
-						}
+								<p>共{countn}件商品，共计￥{sum.toFixed(2)}</p>
+								<Button type="primary">去购物车</Button>
+							</div>
+						</div>
+					}
 					</div>
 					:null
 				}

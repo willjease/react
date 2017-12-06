@@ -34,14 +34,19 @@ class NavHeader extends Component {
   render() {
     const menu = (
     <Menu style={{textAlign: "center"}}>
-      <Menu.Item key="1">
+      <Menu.Item key="/user">
         <Link to="/user">
         用户中心
         </Link>
       </Menu.Item>
-      <Menu.Item key="manage">
+      <Menu.Item key="/manage">
         <Link to="/manage">
         管理中心
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/order">
+        <Link to="/order">
+        用户订单
         </Link>
       </Menu.Item>
       <Menu.Divider />
@@ -78,12 +83,16 @@ class NavHeader extends Component {
               <Item key="male:fushi">服饰类</Item>
               <Item key="male:fujian">附件类</Item>
               </ItemGroup>
+            </SubMenu>
+            <SubMenu className="nav"  title={<span>休闲装<Icon type="down" /></span>}>
               <ItemGroup title="女士">
               <Item key="female:huodong">最新活动</Item>
               <Item key="female:xielei">鞋类</Item>
               <Item key="female:fushi">服饰类</Item>
               <Item key="female:fujian">附件类</Item>
               </ItemGroup>
+            </SubMenu>
+            <SubMenu className="nav"  title={<span>亲子装<Icon type="down" /></span>}>
               <ItemGroup title="儿童">
               <Item key="little:huodong">最新活动</Item>
               <Item key="little:xielei">鞋类</Item>
@@ -96,7 +105,9 @@ class NavHeader extends Component {
 
             <div>
               <Dropdown overlay={menu}>
-                <Button icon="user" className="user-btn">
+                <Button icon="user" className="user-btn" 
+                style={{position: "absolute", top: 15, right: 50,cursor: "pointer"}}
+                >
                 <span> {this.props.username}</span>
                 </Button>
               </Dropdown>
